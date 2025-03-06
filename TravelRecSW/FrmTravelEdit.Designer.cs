@@ -137,6 +137,7 @@
             this.btSelectTravelImage.TabIndex = 52;
             this.btSelectTravelImage.Text = "เลือกรูปการเดินทาง";
             this.btSelectTravelImage.UseVisualStyleBackColor = true;
+            this.btSelectTravelImage.Click += new System.EventHandler(this.btSelectTravelImage_Click);
             // 
             // dtpTravelEndDate
             // 
@@ -158,6 +159,7 @@
             this.tbTravelCostTotal.Name = "tbTravelCostTotal";
             this.tbTravelCostTotal.Size = new System.Drawing.Size(188, 20);
             this.tbTravelCostTotal.TabIndex = 49;
+            this.tbTravelCostTotal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbTravelCostTotal_KeyPress);
             // 
             // label4
             // 

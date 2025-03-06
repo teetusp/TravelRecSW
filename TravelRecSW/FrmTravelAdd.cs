@@ -128,5 +128,25 @@ namespace TravelRecSW
         {
             Dispose();
         }
+
+        private void tbTravelCostTotal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsControl(e.KeyChar))
+            {
+                return; // อนุญาตให้ใช้ปุ่ม control (เช่น Backspace หรือ Delete)
+            }
+
+            // อนุญาตให้พิมพ์ตัวเลขและจุด (.)
+            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true; // ป้องกันการพิมพ์อักขระที่ไม่ใช่ตัวเลขหรือลูกน้ำ
+            }
+
+            // ตรวจสอบว่ามีจุดแล้วหรือยัง
+            if (e.KeyChar == '.' && tbTravelCostTotal.Text.Contains("."))
+            {
+                e.Handled = true; // ถ้ามีจุดแล้วไม่อนุญาตให้ใส่จุดเพิ่ม
+            }
+        }
     }
 }

@@ -127,5 +127,61 @@ namespace TravelRecSW
                 getTravelFromDBToDGV();
             }
         }
+
+        private void tsbtDelete_Click(object sender, EventArgs e)
+        {
+            if(dgvTravel.SelectedRows.Count <= 0)
+            {
+                ShareInfo.showWarningMSG("เลือกรายการที่จะลบด้วย");
+            }
+            else
+            {
+                if(MessageBox.Show("ต้องการลบหรือไม่..", "ยืนยัน", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
+                {
+                    //ติดต่อ DB
+                    SqlConnection conn = new SqlConnection(ShareInfo.connStr);
+                    if (conn.State == ConnectionState.Open)
+                    {
+                        conn.Close();
+                    }
+                    conn.Open();
+
+                    //คำสั่ง SQL
+                    string strSql = "DELETE FROM travel_tb WHERE travelId=@travelId";
+                    //สร้าง SQL Trasaction และ SQL Command เพื่อทำงานกับค่ำสั่ง SQL
+                    SqlTransaction sqlTransaction = conn.BeginTransaction();
+                    SqlCommand sqlCommand = new SqlCommand();
+                    sqlCommand.Connection = conn;
+                    sqlCommand.CommandType = CommandType.Text;
+                    sqlCommand.CommandText = strSql;
+                    sqlCommand.Transaction = sqlTransaction;
+
+                    //Bind Param
+                    //ตัวแปรเก็บแถวที่เลือก
+                    int indexRow = dgvTravel.CurrentRow.Index;
+                    //ตัวแปรเก็บ travelId
+                    int travelId = int.Parse(dgvTravel.Rows[indexRow].Cells[3].Value.ToString());
+                    sqlCommand.Parameters.AddWithValue("@travelId", travelId);
+
+                    //สั่งให้ SQL ทำงาน
+                    try
+                    {
+                        sqlCommand.ExecuteNonQuery();
+                        sqlTransaction.Commit();
+                        conn.Close();
+
+                        MessageBox.Show("บันทึกการเดินทางสำเร็จ", "ผลการทำงาน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        getTravelFromDBToDGV();
+                    }
+                    catch (Exception ex)
+                    {
+                        sqlTransaction.Rollback();
+                        conn.Close();
+                        ShareInfo.showWarningMSG("มีข้อผิดพลาดเกิดขึ้น กรุณาลองใหม่อีกครั้งหรือติดต่อ IT " + ex.Message);
+                    }
+                }
+
+            }
+        }
     }
 }

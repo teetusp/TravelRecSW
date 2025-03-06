@@ -104,6 +104,7 @@
             this.tsbtDelete.Size = new System.Drawing.Size(126, 20);
             this.tsbtDelete.Text = "ลบ";
             this.tsbtDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tsbtDelete.Click += new System.EventHandler(this.tsbtDelete_Click);
             // 
             // toolStripLabel1
             // 

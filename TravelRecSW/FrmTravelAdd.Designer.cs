@@ -102,6 +102,7 @@
             this.tbTravelCostTotal.Name = "tbTravelCostTotal";
             this.tbTravelCostTotal.Size = new System.Drawing.Size(188, 20);
             this.tbTravelCostTotal.TabIndex = 37;
+            this.tbTravelCostTotal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbTravelCostTotal_KeyPress);
             // 
             // label4
             // 
